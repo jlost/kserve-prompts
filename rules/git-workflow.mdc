@@ -25,32 +25,50 @@ Always use `git commit -s -S` when creating commits.
 
 **Always use worktrees for tasks.** Keep the main repo clean (fetch-only).
 
+**Worktrees are for tasks, not branches.** If the target fork/branch was wrong, rebase the worktree in-place rather than creating a new worktree. The task hasn't changed, just the base.
+
 **Always run setup and open worktrees in Cursor after creation.** Run the setup script from the main repo to symlink `.vscode` and `.cursor`, then open in Cursor.
 
 ```bash
 # From main repo
-cd ~/projects/odh-kserve
+cd ~/projects/kserve
 git fetch --all
-git worktree add ../odh-kserve-RHOAIENG-1234 -b RHOAIENG-1234/fix odh/release-v0.15
+git worktree add ../kserve-RHOAIENG-1234 -b RHOAIENG-1234/fix odh/release-v0.15
 
 # Setup worktree (symlinks .vscode/.cursor from main repo)
-.vscode/scripts/setup-worktree.sh ../odh-kserve-RHOAIENG-1234
+.vscode/scripts/setup-worktree.sh ../kserve-RHOAIENG-1234
 
 # Open in Cursor
-cursor ../odh-kserve-RHOAIENG-1234
+cursor ../kserve-RHOAIENG-1234
 
 # Optional: setup Python venv (in the new Cursor window)
 .vscode/scripts/setup-dev-env.sh
 
 # After PR merges, cleanup
-cd ~/projects/odh-kserve
-git worktree remove ../odh-kserve-RHOAIENG-1234
+cd ~/projects/kserve
+git worktree remove ../kserve-RHOAIENG-1234
+```
+
+### Changing the Base Branch In-Place
+
+If you started on the wrong base (e.g., ODH instead of upstream), rebase in-place:
+
+```bash
+# Stash uncommitted changes
+git stash -u -m "WIP changes"
+
+# Reset to the correct base
+git fetch upstream
+git reset --hard upstream/master
+
+# Apply stashed changes
+git stash pop
 ```
 
 **Pass an initial prompt** to copy to clipboard when setting up the worktree:
 
 ```bash
-.vscode/scripts/setup-worktree.sh ../odh-kserve-RHOAIENG-1234 --prompt "/jira RHOAIENG-1234"
+.vscode/scripts/setup-worktree.sh ../kserve-RHOAIENG-1234 --prompt "/jira RHOAIENG-1234"
 ```
 
 The prompt is copied to clipboard and saved to `.agent-prompt` in the worktree.
