@@ -22,10 +22,27 @@ red-hat-data-services/kserve (downstream/RHODS)
 ## Git Remote Naming Convention
 
 When working with git commands or analyzing branches, expect these remote names:
-- `upstream` or `kserve` -> kserve/kserve
+- `upstream` -> kserve/kserve
 - `odh` -> opendatahub-io/kserve
 - `downstream` -> red-hat-data-services/kserve
 - `origin` -> user's personal fork
+
+## Initial Workspace Setup
+
+**Configure git remotes** using the setup script:
+
+```bash
+.cursor/scripts/setup-git-remotes.sh
+```
+
+This interactive script will:
+- Configure `upstream` (kserve/kserve)
+- Configure `odh` (opendatahub-io/kserve)
+- Configure `downstream` (red-hat-data-services/kserve)
+- Configure `origin` (your personal fork)
+- Fetch all remotes
+
+Run this once when setting up a new workspace or clone.
 
 ## Branch Targeting Rules
 
@@ -50,6 +67,5 @@ When syncing code between forks:
 
 ## Reference Documentation
 
-- Multi-fork workflow guide: `.vscode/multi-fork-workflow.md`
 - ODH contribution guide: `CONTRIBUTING.md`
 - Upstream release fetch process: `docs/odh/fetch-upstream-release.md`

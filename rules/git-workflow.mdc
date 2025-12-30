@@ -49,6 +49,8 @@ cd ~/projects/kserve
 git worktree remove ../kserve-RHOAIENG-1234
 ```
 
+**Note:** If git remotes are not configured, run `.cursor/scripts/setup-git-remotes.sh` first (see fork-structure rules).
+
 ### Changing the Base Branch In-Place
 
 If you started on the wrong base (e.g., ODH instead of upstream), rebase in-place:
@@ -68,11 +70,10 @@ git stash pop
 **Pass an initial prompt** to copy to clipboard when setting up the worktree:
 
 ```bash
-.vscode/scripts/setup-worktree.sh ../kserve-RHOAIENG-1234 --prompt "/jira RHOAIENG-1234"
+.cursor/scripts/setup-worktree.sh ../kserve-RHOAIENG-1234 --prompt "/jira RHOAIENG-1234"
 ```
 
 The prompt is copied to clipboard and saved to `.agent-prompt` in the worktree.
 
 **Always use `/jira TICKET-ID` format** for initial prompts so the new agent fetches full Jira context.
 
-See `.vscode/multi-fork-workflow.md` for detailed patterns.
