@@ -1,5 +1,5 @@
 ---
-description: JIRA integration and cross-repository GitHub reference handling
+description: JIRA integration, PR creation, and cross-repository GitHub reference handling
 alwaysApply: true
 ---
 
@@ -31,6 +31,42 @@ GitHub PR/issue numbers (e.g., "#942") are **repository-specific** and ambiguous
   - `red-hat-data-services/kserve#942`
 - The JIRA changelog's RemoteIssueLink usually includes the full URL which disambiguates the repo
 
+## PR Creation Policy
+
+**Always require user review before creating any PR.** Present the complete PR details (title, description, target repo/branch, commits) and wait for explicit approval before calling any GitHub PR creation tools.
+
+**Always create PRs as drafts.** Use `draft: true` when creating pull requests.
+
+**Use the PR template.** Base PR descriptions on `.github/PULL_REQUEST_TEMPLATE.md`, deleting irrelevant sections to reduce noise. Keep only applicable checkboxes and fill in relevant details.
+
+## JIRA Linking by Repository
+
+DPTP Bot only monitors ODH repos (opendatahub-io, red-hat-data-services), not upstream (kserve/kserve). Link PRs to JIRAs accordingly:
+
+### Upstream PRs (kserve/kserve)
+
+**Do NOT put JIRA keys in the PR title or body.** This is the established convention among main Red Hat contributors.
+
+After creating an upstream PR, **manually add a web link to the JIRA**:
+1. Use `jira_create_remote_issue_link` MCP tool to add the PR URL to the JIRA
+2. Use a descriptive title like "Upstream PR: fix pod watch for faster error propagation"
+
+Example:
+```
+jira_create_remote_issue_link(
+  issue_key="RHOAIENG-1234",
+  url="https://github.com/kserve/kserve/pull/4910",
+  title="Upstream PR: fix pod init container status watch"
+)
+```
+
+### ODH/Downstream PRs (opendatahub-io/kserve, red-hat-data-services/kserve)
+
+**Include JIRA key in the PR title** so DPTP Bot automatically links it:
+- Format: `[RHOAIENG-1234] Fix validation bug`
+
+DPTP Bot will automatically create a RemoteIssueLink in the JIRA when it detects the key.
+
 ## PR Description Conventions
 
 When creating or reviewing PRs:
@@ -39,7 +75,4 @@ When creating or reviewing PRs:
    - Example: "Cherry-pick of kserve/kserve#1234"
    - Example: "Backport of opendatahub-io/kserve#567"
 
-2. **JIRA references**: Include JIRA key in title or description
-   - Example: "[RHOAIENG-1234] Fix validation bug"
-
-3. **Cross-fork coordination**: Note if PR needs cherry-picking to other forks
+2. **Cross-fork coordination**: Note if PR needs cherry-picking to other forks

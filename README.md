@@ -1,10 +1,10 @@
-# KServe Cursor AI Workspace
+# KServe Agentic Prompts
 
 AI agent rules and commands for developing KServe on OpenShift. This is a companion to the [kserve-workspace](https://github.com/jlost/kserve-workspace) VS Code configuration.
 
 ## Features
 
-* **Cursor Rules** - Context-aware rules that help the AI understand the multi-fork structure and workflows
+* **Cursor/Claude Code Rules** - Context-aware rules that help the AI understand the multi-fork structure and workflows
 * **Slash Commands** - Pre-built prompts for common development tasks like JIRA lookup, cherry-pick checking, and PR targeting
 * **MCP Integration** - Configured for JIRA, GitHub, Slack, and Kubernetes tools
 
@@ -23,7 +23,7 @@ This repository depends on the [kserve-workspace](https://github.com/jlost/kserv
 2. Clone this repository into your kserve repository at the root, named as `.cursor`:
     ```sh
     cd kserve
-    git clone git@github.com:jlost/kserve-cursor.git .cursor
+    git clone git@github.com:jlost/kserve-prompts.git .cursor
     ```
     You should now have both `.vscode` and `.cursor` directories at the root of the kserve repository.
 
